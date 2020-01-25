@@ -13,12 +13,11 @@ const createRoute = (componentsToCheck => {
 });
 
 const createIndexFile = ((route, componentName) => {
-    const contents = `
-        import ${componentName}, { ${componentName}Props } from './${componentName}';
-
-        export default ${componentName};
-        export type ${componentName}Props = ${componentName}Props;
-    `;
+    const contents =
+        `import ${componentName}, { ${componentName}Props } from './${componentName}';\n` +
+        `\n` +
+        `export default ${componentName};\n` +
+        `export type ${componentName}Props = ${componentName}Props;\n`;
 
     fs.writeFileSync(`${route}${path.sep}index.ts`, contents, err => {
         if (err) throw err;
@@ -36,19 +35,18 @@ const createStyleFile = ((route, componentName) => {
 });
 
 const createComponentFile = ((route, componentName) => {
-    const contents = `
-    import React from 'react';
-
-    import styles from './${componentName}.module.css';
-
-    export type ${componentName}Props = {}
-
-    const ${componentName}: React.FunctionComponent<${componentName}Props> = (props) => {
-        return <></>;
-    }
-
-    export default ${componentName};
-    `;
+    const contents =
+        `import React from 'react';\n` +
+        `\n` +
+        `import styles from './${componentName}.module.css';\n` +
+        `\n` +
+        `export type ${componentName}Props = {}\n` +
+        `\n` +
+        `const ${componentName}: React.FunctionComponent<${componentName}Props> = (props) => {\n` +
+        `    return <></>;\n` +
+        `}\n` +
+        `\n` +
+        `export default ${componentName};\n`;
 
     fs.writeFileSync(`${route}${path.sep}${componentName}.tsx`, contents, err => {
         if (err) throw err;
@@ -63,7 +61,7 @@ if (args.length != 1) {
 } else {
     const componentRoute = args[0];
     const pathComponents = componentRoute.split(path.sep);
-
+    
     let componentName = pathComponents[pathComponents.length - 1];
     componentName = componentName.charAt(0).toLocaleUpperCase() + componentName.slice(1);
 
@@ -75,6 +73,6 @@ if (args.length != 1) {
     createIndexFile(componentDestination, componentName);
     createStyleFile(componentDestination, componentName);
     createComponentFile(componentDestination, componentName);
-
+    
     console.log('Done!');
 }
