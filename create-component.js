@@ -42,7 +42,7 @@ const createComponentFile = ((route, componentName) => {
         `\n` +
         `export type ${componentName}Props = {}\n` +
         `\n` +
-        `const ${componentName}: React.FunctionComponent<${componentName}Props> = (props) => {\n` +
+        `const ${componentName}: React.FunctionComponent<${componentName}Props> = (props): JSX.Element => {\n` +
         `    return <></>;\n` +
         `}\n` +
         `\n` +
